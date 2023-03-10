@@ -16,11 +16,12 @@ export default function Login() {
       username : username,
       password : pass,
     }
-    console.log(userDetails);
+    // console.log(userDetails);
     await axios.post(`http://localhost:8000/api/loginUser` , userDetails).then((res)=>{
         console.log(res.data);
         dispatch(actionCreators.setToken(res.data));
         dispatch(actionCreators.initialiseCards(res.data.cards));
+        dispatch(actionCreators.iniHistory(res.data.history));
         navigate('/');
     }).catch(err => {
       console.log(err);

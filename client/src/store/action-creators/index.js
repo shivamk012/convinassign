@@ -71,3 +71,39 @@ export const updateCard = (newData) => {
         })
     }
 }
+
+export const updateHistory = (newData)=>{
+    return (dispatch) => {
+        dispatch({
+            type : 'updateHistory',
+            payload : newData
+        })
+    }
+}
+
+export const removeItem = (newData)=>{
+    return (dispatch)=>{
+        dispatch({
+            type : "deleteItem",
+            payload : newData
+        })
+    }
+}
+
+export const saveItem = (newData)=>{
+    return (dispatch)=>{
+        dispatch({
+            type : "notdeleteItem",
+            payload : newData
+        })
+    }
+}
+
+export const iniHistory = (newData)=>{
+    return (dispatch)=>{
+        dispatch({
+            type : "iniHistory",
+            payload : newData
+        })
+    }
+}

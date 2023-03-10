@@ -9,8 +9,8 @@ const reducer =(state=initial_state , action)=>{
             link : action.payload.link,
             bucket : action.payload.bucket
         }
-        console.log(newCard);
-        console.log(state);
+        // console.log(action.payload);
+        // console.log(state);
         state.cards.push(newCard);
         return {
             ...state
@@ -44,14 +44,17 @@ const reducer =(state=initial_state , action)=>{
         }
     }
     else if(action.type === "initialiseCards"){
-        console.log(action.payload);
+        // console.log(action.payload);
         return {
             ...state,
             cards : action.payload,
         };
     }
     else if(action.type === "updateCards"){
-
+        return {
+            ...state,
+            cards : action.payload
+        }
     }
     else return {
         ...state

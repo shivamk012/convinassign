@@ -25,7 +25,7 @@ export default function Register() {
     const port = process.env.PORT;
 
     await axios.post(`http://localhost:8000/api/setUser` , userDetails).then((res)=>{
-        console.log(res.data.insertedId);
+        // console.log(res.data.insertedId);
         dispatch(actionCreators.setToken({
             _id : res.data.insertedId,
             username : username,

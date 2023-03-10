@@ -1,27 +1,5 @@
 import { ObjectId } from 'mongodb'
 
-async function listDatabases(client){
-    try{
-        const dbList = await client.db().admin().listDatabases();
-        // console.log(dbList);
-        dbList.databases.forEach(element => {
-            console.log(element.name);
-        });
-    }catch(err){
-        console.log(err);
-    }
-    
-}
-
-async function insertFood(client , data){
-    try{
-        const result = await client.db("ContentCreator").collection("Food").insertOne(data);
-        console.log(result);
-    }catch(err){
-        console.log(err);
-    }
-}
-
 export async function insertUser(client , userData){
     try{
         const result = await client.db("ContentCreator").collection("User").insertOne(userData);
@@ -68,33 +46,13 @@ export async function addCard(client , proData){
     }
 }
 
-export async function sendRequest(client , OrderData){
+export async function updateHistory(client , data){
     try{
-        const cursor = await client.db("ContentCreator").collection("User").findOne({
-            isAdmin : true
-        });
-        let updatedRequest = cursor.request;
-        updatedRequest.push({
-            clientId : OrderData.clientId,
-            name : OrderData.name,
-            address : OrderData.address,
-            cart : OrderData.cart
-        });
-        // console.log(result);
-        const result = await client.db("ContentCreator").collection("User").updateOne({_id:cursor._id} , {$set:{
-            request : updatedRequest
+        const id = new ObjectId(data._id);
+        const result = await client.db("ContentCreator").collection("User").updateOne({_id:id} , {$set:{
+            history : data.history
         }});
         return result;
-    }catch(err){
-        console.log(err);
-    }
-}
-
-export async function getRequestArr(client){
-    try{
-        const result = await client.db("ContentCreator").collection("User").findOne({isAdmin : true});
-        console.log(result);
-        return result.request;
     }catch(err){
         console.log(err);
     }

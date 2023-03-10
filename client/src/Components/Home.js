@@ -13,15 +13,49 @@ export default function Home() {
     const setLogin = useSelector(state=>state.setLogin)
     const port = process.env.PORT;
     const tempcard = useSelector(state=>state.cards);
-    useEffect(() => {
-        if(setLogin.clientId === null){
+    const deleteData = useSelector(state=>state.deleteItem);
+    // useEffect(() => {
+        
+    //     // console.log(typeof(card));
+    //     // eslint-disable-next-line
+    // },[])
 
-        }else{
-          setCard(tempcard.cards);
+    useEffect(()=>{
+      if(setLogin.clientId === null){
+        setCard([]);
+      }else{
+        setCard(tempcard.cards);
+      }
+    } , [setLogin.clientId])
+
+    const deleteItem = async()=>{
+      const arr = deleteData.deleteItem;
+      // console.log(arr);
+      let idx = new Array(card.length).fill(false);
+      for(let i=0 ; i<card.length ; i += 1){
+        for(let j = 0 ; j<arr.length ; j += 1){
+          console.log(arr[j]);
+          console.log(card[i]);
+          if(arr[j].name === card[i].name && arr[j].link === card[i].link && arr[j].bucket === card[i].bucket){
+            idx[i] = true;
+          }
         }
-        console.log(typeof(card));
-        // eslint-disable-next-line
-    },[])
+      }
+      let newCard = [];
+      for(let i=0 ; i<card.length ; i += 1){
+        if(idx[i] === false){
+          newCard.push(card[i]);
+        }
+      }
+      // console.log(newCard);
+      setCard(newCard);
+      dispatch(actionCreators.updateCard(newCard));
+      const userData = {
+        clientId : setLogin.clientId,
+        cards : newCard
+      }
+      const result = await axios.post(`http://localhost:8000/api/updateCards` , userData);
+    }
     
   return (
     <div>
@@ -29,9 +63,10 @@ export default function Home() {
             <NavBar/>
             <div className="container">
             <div className="row my-4">
-                {card.map((element)=>{
+                <button onClick={deleteItem}>Delete Selected</button>
+                {card.map((element , idx)=>{
                 return <div className='col-sm' key={element.name}>
-                    <ContentCard name={element.name} link={element.link} bucket={element.link}/>
+                    <ContentCard name={element.name} link={element.link} bucket={element.bucket} index={idx}/>
                     </div>
                 })}
             </div>

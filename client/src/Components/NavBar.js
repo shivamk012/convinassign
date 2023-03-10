@@ -15,16 +15,12 @@ export default function NavBar() {
   let button1;
   let cartButton;
   let addNewItem;
-  let confirmRequest;
   
   const Logout = async()=>{
-    await axios.post(`http://localhost:8000/api/updateCart` , {
-      clientId : setLogin.clientId,
-    }).then((res)=>{
-      dispatch(actionCreators.logOutSession());
-      navigate('/');
-      
-    })  
+    dispatch(actionCreators.logOutSession());
+    dispatch(actionCreators.updateCard([]));
+    dispatch(actionCreators.updateHistory([]));
+    navigate('/');    
   }
 
   if(!setLogin.clientId){
@@ -37,7 +33,7 @@ export default function NavBar() {
   }
   return (
 
-<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{"font-size" : "25px"}}>
+<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{"fontSize" : "25px"}}>
   <div className="container-fluid">
     <button
       className="navbar-toggler"

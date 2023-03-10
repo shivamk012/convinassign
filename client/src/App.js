@@ -4,9 +4,8 @@ import './App.css';
 import Home from './Components/Home'
 import Register from './Components/Register'
 import Login from './Components/Login';
-import Cart from './Components/Cart';
 import Product from './Components/NewProduct'
-import Checkout from './Components/Checkout'
+import History from './Components/History';
 
 import {
   BrowserRouter as Router,
@@ -25,9 +24,8 @@ export default function App() {
         <Route exact path='/Register' element={< Register />}></Route>
         <Route exact path='/Login' element={< Login />}></Route>
         <Route exact path='/Logout' element={< Login />}></Route>
-        <Route exact path='/Cart' element={< Cart />}></Route>
-        <Route exact path='/checkout' element={< Checkout />}></Route>
         <Route exact path='/addNewProduct' element={< Product />}></Route>
+        <Route exact path='/History' element={<History/>}></Route>
       </Routes>
     </Router>
     </div>
